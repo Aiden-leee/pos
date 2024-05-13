@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "table_id": "t1",
+    "status": "vacant",
+    "hc": 0,
+    "price": 0,
+    "foods": [],
+    "date": "2024-05-05"
+  },
+  {
+    "uid": 2,
+    "table_id": "t2",
+    "status": "occupied",
+    "hc": 2,
+    "price": 20000,
+    "foods": [],
+    "date": "2024-05-05"
+  },
+  {
+    "uid": 3,
+    "table_id": "t3",
+    "status": "orderHold",
+    "hc": 0,
+    "price": 0,
+    "foods": [],
+    "date": "2024-05-05"
+  },
+  {
+    "uid": 4,
+    "table_id": "t4",
+    "status": "vacant",
+    "hc": 0,
+    "price": 0,
+    "foods": [],
+    "date": "2024-05-05"
+  },
+  {
+    "uid": 5,
+    "table_id": "t5",
+    "status": "vacant",
+    "hc": 0,
+    "price": 0,
+    "foods": [],
+    "date": "2024-05-05"
+  },
+  {
+    "uid": 6,
+    "table_id": "t6",
+    "status": "vacant",
+    "hc": 0,
+    "price": 0,
+    "foods": [],
+    "date": "2024-05-05"
+  }
+]

@@ -1,0 +1,74 @@
+/* ui-counter */
+.ui-counter {
+  display: inline-block;
+
+  button {
+    display: inline-block;
+    width: 25px;
+    color: #000;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem 0 0 0.5rem;
+
+    &:hover {
+      background: #f2f2f2;
+    }
+
+    &:last-child {
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+  }
+  > input {
+    min-width: 30px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+}
+
+/* ui-modal */
+.ui-modal {
+  border: none;
+  border-radius: 8px;
+  padding: 2rem;
+  background-color: #d7fcf8;
+
+  > h2 {
+    margin: 0 0 0.25rem 0;
+    font-size: 3rem;
+    text-transform: uppercase;
+  }
+}
+
+dialog[open] {
+  animation: slide-in-from-top 0.35s ease-out;
+}
+
+dialog[open]::backdrop {
+  background: rgba(0,0,0,0.5);
+  animation: fade-in 0.35s ease-out;
+}
+
+dialog {
+  animation: slide-out-from-bottom 0.35s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-from-top {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
