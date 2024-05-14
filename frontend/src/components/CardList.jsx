@@ -1,26 +1,23 @@
 import { currencyFormatter } from "../util/util";
 
 // 메뉴 목록
-function CardList({ data, onCurrentData }) {
-  // menu 추가
-  // function onAddItem(item, id) {
-  //   onCurrentData((prevItems) => {
-  //     const updatedItems = prevItems.map((prev) => {
-  //       if (prev.id === id) {
-  //         // 기존 아이템의 경우 수량을 증가시킴
-  //         return { ...prev, quantity: prev.quantity + 1 };
-  //       }
-  //       return prev;
-  //     });
-
-  //     if (!updatedItems.some((prev) => prev.id === id)) {
-  //       // 새로운 아이템인 경우 추가
-  //       updatedItems.push({ ...item, quantity: 1 });
-  //     }
-
-  //     return updatedItems;
-  //   });
-  // }
+function CardList({ data, orderData, onCurrentData }) {
+  // 메뉴 클릭시 추가
+  function onAddItem(item, id) {
+    const exist = orderData.foods.some((food) => food.id === id);
+    let updated;
+    if (exist) {
+      updated = orderData.foods.map((food) => {
+        if (food.id === id) {
+          food.quantity = food.quantity += 1;
+        }
+        return food;
+      });
+    } else {
+      orderData.foods.push({ ...item, quantity: 1 });
+    }
+    onCurrentData(updated);
+  }
 
   return (
     <ul className="grid grid-cols-4 gap-4">
@@ -28,7 +25,7 @@ function CardList({ data, onCurrentData }) {
         <li
           key={list.id}
           className="bg-white rounded-lg cursor-pointer outline outline-0 hover:outline-1 hover:outline-point"
-          //onClick={() => onAddItem(list, list.id)}
+          onClick={() => onAddItem(list, list.id)}
         >
           <div className="text-center">
             <div className="image-box w-full">

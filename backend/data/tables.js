@@ -1,6 +1,7 @@
 // 데이터 핸들링 파일
 const fs = require("node:fs/promises");
 const { NotFoundError } = require("../utils/error");
+const { dateFormatter } = require("../utils/util");
 
 // 테이블 데이터 가져오기
 async function readData() {
@@ -36,15 +37,19 @@ async function getTableDetail(id) {
 }
 
 // 테이블의 음식 수정
-// id : table의 id,
+// id : table의 id, ( t1, t2, t3 ...)
 // data : 해당 테이블의 주문된 음식
-async function updateFoodOfTable(id, data, hc) {
+async function updateFoodOfTable(id, data) {
   // 전체 데이터
   const allData = await fs.readFile("./db.json");
   const res = JSON.parse(allData);
   // 기존 테이블 데이터를 가져옴
   const storeData = await readData();
 
+  console.log(storeData);
+  console.log(id);
+  console.log("--".repeat(5));
+  console.log(data);
   // 해당 테이블의 인덱스
   const targetIndex = storeData.findIndex((item) => item.id === id);
 
@@ -54,7 +59,7 @@ async function updateFoodOfTable(id, data, hc) {
   }
 
   // 해당 테이블의 foods 업데이트
-  storeData[targetIndex].foods = [...data];
+  storeData[targetIndex].foods = [...data.foods];
   const totalPrice = storeData[targetIndex].foods.reduce((acc, cur) => {
     return acc + cur.price * cur.quantity;
   }, 0);
@@ -66,7 +71,17 @@ async function updateFoodOfTable(id, data, hc) {
   storeData[targetIndex].status = "occupied";
 
   // hc(인원수) => 업데이트
-  storeData[targetIndex].hc = hc;
+  storeData[targetIndex].hc = data.hc;
+
+  // 날짜 업데이트
+  if (
+    storeData[targetIndex].date === undefined ||
+    storeData[targetIndex].date === ""
+  ) {
+    storeData[targetIndex].date = dateFormatter("yyyy/mm/dd h:m:s");
+  } else {
+    storeData[targetIndex].updated = dateFormatter("yyyy/mm/dd h:m:s");
+  }
 
   // 전체 db 업데이트
   res.tables = storeData;

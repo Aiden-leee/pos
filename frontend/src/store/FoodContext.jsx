@@ -99,34 +99,34 @@ function foodCartReducer(state, action) {
     //   items: updatedFoodItems,
     // };
 
-    case "REMOVE_ITEM":
-      const removeItems = [...state.items];
-      const removeIndex = state.items.findIndex(
-        (item) => item.id === action.id
-      );
-      removeItems.splice(removeIndex, 1);
-      return {
-        ...state,
-        items: removeItems,
-      };
+    // case "REMOVE_ITEM":
+    //   const removeItems = [...state.items];
+    //   const removeIndex = state.items.findIndex(
+    //     (item) => item.id === action.id
+    //   );
+    //   removeItems.splice(removeIndex, 1);
+    //   return {
+    //     ...state,
+    //     items: removeItems,
+    //   };
 
-    case "UPDATE_ITEM":
-      const currentItemIndex = state.items.findIndex(
-        (item) => item.id === action.current.id
-      );
-      const currentItem = state.items[currentItemIndex];
-      const currentUpdateItem = [...state.items];
+    // case "UPDATE_ITEM":
+    //   const currentItemIndex = state.items.findIndex(
+    //     (item) => item.id === action.current.id
+    //   );
+    //   const currentItem = state.items[currentItemIndex];
+    //   const currentUpdateItem = [...state.items];
 
-      const updated = {
-        ...currentItem,
-        quantity: action.current.quantity,
-      };
-      currentUpdateItem[currentItemIndex] = updated;
+    //   const updated = {
+    //     ...currentItem,
+    //     quantity: action.current.quantity,
+    //   };
+    //   currentUpdateItem[currentItemIndex] = updated;
 
-      return {
-        ...state,
-        items: currentUpdateItem,
-      };
+    //   return {
+    //     ...state,
+    //     items: currentUpdateItem,
+    //   };
     case "CLEAR_CART":
       return {
         ...state,
@@ -144,18 +144,18 @@ export function FoodCartContextProvider({ children }) {
     dispatchCartAction({ type: "ADD_ITEM", idx });
   }
 
-  function decreaseItem(id) {
-    dispatchCartAction({ type: "DECREASE_ITEM", id });
-  }
+  // function decreaseItem(id) {
+  //   dispatchCartAction({ type: "DECREASE_ITEM", id });
+  // }
 
-  function removeItem(id) {
-    dispatchCartAction({ type: "REMOVE_ITEM", id });
-  }
+  // function removeItem(id) {
+  //   dispatchCartAction({ type: "REMOVE_ITEM", id });
+  // }
 
-  function updateItem(id, quantity) {
-    const current = { id, quantity };
-    dispatchCartAction({ type: "UPDATE_ITEM", current });
-  }
+  // function updateItem(id, quantity) {
+  //   const current = { id, quantity };
+  //   dispatchCartAction({ type: "UPDATE_ITEM", current });
+  // }
 
   function clearCart() {
     dispatchCartAction({ type: "CLEAR_CART" });

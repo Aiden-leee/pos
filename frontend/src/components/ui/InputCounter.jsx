@@ -24,16 +24,18 @@ export default function InputCounter({
 
   // 감소
   function handleDecrease() {
-    setCurrentCount((current) => parseInt(current) - 1);
-
-    onDecrease();
+    if (currentCount > min) {
+      setCurrentCount((current) => parseInt(current) - 1);
+      onDecrease();
+    }
   }
 
   // 증가
   function handleIncrease() {
-    setCurrentCount((current) => parseInt(current) + 1);
-
-    onIncrease();
+    if (currentCount < max) {
+      setCurrentCount((current) => parseInt(current) + 1);
+      onIncrease();
+    }
   }
 
   // 직접 변환 함수

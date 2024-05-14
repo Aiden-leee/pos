@@ -3,10 +3,33 @@ import { createPortal } from "react-dom";
 import Button from "./Button";
 
 const Modal = forwardRef(function Modal(
-  { title, content, onConfirm, onReset },
+  { title, type, content, onConfirm, onReset },
   ref
 ) {
   const dialog = useRef();
+
+  // button type
+  // confirm : 확인 버튼만 있음
+  // choice : 확인 버튼과 취소 버튼
+  let typeButton;
+  if (type === "confirm") {
+    typeButton = (
+      <>
+        <Button type="button" onClick={onConfirm}>
+          Confirm
+        </Button>
+      </>
+    );
+  } else if (type === "choice") {
+    typeButton = (
+      <>
+        <Button type="button" onClick={onConfirm}>
+          Confirm
+        </Button>
+        <Button>Cancel</Button>
+      </>
+    );
+  }
 
   useImperativeHandle(ref, () => {
     return {
@@ -31,22 +54,19 @@ const Modal = forwardRef(function Modal(
       ref={dialog}
       onClose={onReset}
       onClick={handleClose}
-      className="ui-modal min-w-80 rounded-lg"
+      className="rounded-lg ui-modal min-w-80"
     >
-      <h2 className="py-2 px-4 bg-point text-active font-bold">{title}</h2>
-      <div className="modal-content p-4">
+      <h2 className="px-4 py-2 font-bold bg-point text-active">{title}</h2>
+      <div className="p-4 modal-content">
         <p>{content}</p>
       </div>
 
       <form
         method="dialog"
         onSubmit={onReset}
-        className="py-2 px-4 flex justify-end"
+        className="flex justify-end px-4 py-2"
       >
-        <Button type="button" onClick={onConfirm}>
-          Confirm
-        </Button>
-        <Button>Close</Button>
+        <div className="flex gap-2">{typeButton}</div>
       </form>
     </dialog>,
     document.getElementById("modal")

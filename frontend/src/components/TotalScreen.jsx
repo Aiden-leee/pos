@@ -16,10 +16,10 @@ function TotalScreen({ data, onProceed }) {
         ))}
       </ul>
       <div className="absolute bottom-0 w-full">
-        <h2 className="p-4 font-bold border-dashed border-t-2 border-iconColor">
+        <h2 className="p-4 font-bold border-t-2 border-dashed border-iconColor">
           Total Price : {currencyFormatter.format(totalPrice)} 원
         </h2>
-        <div className="text-right p-4">
+        <div className="p-4 text-right">
           <button
             onClick={onProceed}
             className="py-2 px-4 bg-active rounded-lg border border-iconColor font-bold text-[#666] hover:text-[#333] hover:border-[#333]"

@@ -1,46 +1,43 @@
 import { currencyFormatter, headCount } from "../util/util";
-import { useContext, useEffect, useState } from "react";
+import { useState, useRef, memo } from "react";
 import { useParams } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/20/solid";
-import FoodCartContext from "../store/FoodContext";
 import InputCounter from "./ui/InputCounter";
 import Select from "../components/ui/Select";
-import { memo } from "react";
 import TotalScreen from "./TotalScreen";
 import Modal from "./ui/Modal";
+import { useEffect } from "react";
 import { postFetchTableOrderList } from "../util/http";
-import { useRef } from "react";
+import { useCallback } from "react";
 
 // 주문 목록
 const OrderList = memo(function OrderList({ data, onCurrentData }) {
   const params = useParams();
-  const [orderlist, setOrderList] = useState(data);
   const dialog = useRef();
   const dialogCheck = useRef();
+  const [orderlist, setOrderList] = useState(data);
 
   // 수량 증가
-  function handleIncrease(idx) {
+  function handleIncrease(food) {
     setOrderList((prev) => {
-      return { ...prev, quantity: (orderlist.foods[idx].quantity += 1) };
+      food.quantity = food.quantity += 1;
+      return { ...prev };
     });
   }
 
   // 수량 감소
-  function handleDecrease(idx) {
+  function handleDecrease(food) {
     setOrderList((prev) => {
-      if (prev.foods[idx].quantity > 1) {
-        return { ...prev, quantity: (orderlist.foods[idx].quantity -= 1) };
-      }
+      food.quantity = food.quantity -= 1;
+      return { ...prev };
     });
   }
 
   // 수량 직접 변환 업데이트
-  function handleUpdate(idx, quantity) {
-    //data[idx].quantity = quantity;
+  function handleUpdate(food, quantity) {
     setOrderList((prev) => {
-      if (prev.foods[idx].quantity > 0) {
-        return { ...prev, quantity: +quantity };
-      }
+      food.quantity = quantity;
+      return { ...prev };
     });
   }
 
@@ -57,37 +54,34 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
     dialog.current.open();
   }
 
-  // 모달 컨펌
-  async function handleConfirm() {
-    // 주문된 목록을 업데이트 시킨다.
-    // const response = await postFetchTableOrderList(
-    //   orderList,
-    //   params.tableid,
-    //   hc
-    // );
-    // console.log(response);
-    dialog.current.close();
+  // 인원수 변경
+  function handleChangeHeadCount(hc) {
+    setOrderList((prev) => {
+      return { ...prev, hc };
+    });
   }
 
-  function onCloseModal() {
+  // 모달 컨펌
+  const handleConfirm = useCallback(
+    async function handleConfirm() {
+      // 주문된 목록을 업데이트 시킨다.
+      const response = await postFetchTableOrderList(orderlist, params.tableid);
+      dialog.current.close();
+      if (response.status === 200) {
+        dialogCheck.current.open();
+      }
+    },
+    [orderlist, params.tableid]
+  );
+
+  // 주문 모달 닫기
+  function handleConfirmOk() {
     dialogCheck.current.close();
   }
 
-  // // context 에 담겼는지 유무
-  // useEffect(() => {
-  //   setIsLoad(true);
-  //   return () => {
-  //     setIsLoad(false);
-  //   };
-  // }, [foodsCtx.items]);
-
-  // // db 데이터를 context 에 담아서 출력해준다.
-  // useEffect(() => {
-  //   foodsCtx.loadItem(data);
-
-  //   return () => foodsCtx.clearCart();
-  // }, []);
-  console.log(orderlist);
+  useEffect(() => {
+    onCurrentData(() => orderlist);
+  }, [orderlist, onCurrentData]);
 
   return (
     <>
@@ -95,46 +89,48 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
         ref={dialog}
         title="Order"
         content="주문하시겠습니까?"
+        type="choice"
         onConfirm={handleConfirm}
       />
       <Modal
         ref={dialogCheck}
         title="Success"
         content="주문이 완료되었습니다."
-        onConfirm={onCloseModal}
+        type="confirm"
+        onConfirm={handleConfirmOk}
       ></Modal>
       <div className="flex justify-between">
-        <strong className="uppercase block pb-2">
+        <strong className="block pb-2 uppercase">
           Table No: {params.tableid}
         </strong>
         <div>
           인원수:
           <Select
             lists={headCount}
-            //onChangeCurrent={setHc}
+            onChangeCurrent={(hc) => handleChangeHeadCount(hc)}
             current={orderlist.hc}
           />
         </div>
       </div>
-      <ul className="mb-4 overflow-auto h-full">
+      <ul className="h-full mb-4 overflow-auto">
         {orderlist &&
           orderlist.foods.map((food, index) => (
             <li
               key={food.id}
               className="odd:bg-pointLight relative before:content-[''] before:absolute before:left-0 before:block before:w-[3px] before:h-full before:bg-point"
             >
-              <div className="py-2 flex">
+              <div className="flex py-2">
                 <span className="basis-[10%] text-center">{index + 1}</span>
-                <div className="basis-2/5 px-3">{food.title}</div>
-                <div className="basis-1/5 px-2">
+                <div className="px-3 basis-2/5">{food.title}</div>
+                <div className="px-2 basis-1/5">
                   {currencyFormatter.format(food.price)}
                 </div>
-                <div className="basis-1/5 text-center">
+                <div className="text-center basis-1/5">
                   <InputCounter
                     count={food.quantity}
-                    onIncrease={() => handleIncrease(index)}
-                    onDecrease={() => handleDecrease(index)}
-                    onUpdateCount={(quantity) => handleUpdate(index, +quantity)}
+                    onIncrease={() => handleIncrease(food)}
+                    onDecrease={() => handleDecrease(food)}
+                    onUpdateCount={(quantity) => handleUpdate(food, +quantity)}
                     min="1"
                     max="99"
                   />

@@ -34,10 +34,9 @@ router.get("/:id", async (req, res, next) => {
 // 해당 테이블의 foods 수정
 router.patch("/:id", async (req, res, next) => {
   const data = req.body;
-
   try {
-    await updateFoodOfTable(req.params.id, data.foods, data.hc);
-    res.json({ message: "table updated", tables: data });
+    await updateFoodOfTable(req.params.id, data.foods);
+    res.json({ message: "table updated", data, status: 200 });
   } catch (error) {
     next(error);
   }

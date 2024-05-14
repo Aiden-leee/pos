@@ -36,7 +36,7 @@ function TableLists({ tables }) {
                   {table.hc}명 / {currencyFormatter.format(table.price)}원
                 </span>
               </div>
-              <div className="relative h-48 bg-tableImage bg-no-repeat bg-auto bg-center">
+              <div className="relative h-48 bg-tableImage bg-no-repeat bg-auto bg-center text-center">
                 <ul className="absolute top-2/4 left-2/4 translate-y-[-50%] translate-x-[-50%]">
                   {table.foods.length > 0 &&
                     table.foods.map((food) => (

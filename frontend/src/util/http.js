@@ -3,6 +3,9 @@ import { json } from "react-router-dom";
 
 const instance = axios.create({
   baseURL: "http://localhost:4000",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // 주문 메뉴들
@@ -39,21 +42,21 @@ export async function getFetchTableDetailOrderList(id) {
 }
 
 // 테이블 주문 추가 수정
-export async function postFetchTableOrderList(orderList, tableid, hc) {
+export async function postFetchTableOrderList(orderList, tableid) {
   try {
     const response = await instance.patch("/tables/" + tableid, {
       foods: orderList,
-      hc,
     });
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw json(
         { message: "could not fetch( postFetchTableOrderList )" },
         { status: 500 }
       );
     } else {
       const resData = await response.data;
-      return { message: resData.message, status: true };
+      console.log(resData);
+      return resData;
     }
   } catch (error) {
     console.log(error);
