@@ -1,4 +1,4 @@
-import { Await, defer, useLoaderData, useParams } from "react-router-dom";
+import { Await, defer, useParams, useRouteLoaderData } from "react-router-dom";
 import PageContent from "../components/PageContent";
 import { Suspense, useState, useContext } from "react";
 import CardList from "../components/CardList";
@@ -8,7 +8,7 @@ import FoodCartContext from "../store/FoodContext";
 
 // 포스 화면
 function PosMenu() {
-  const { foods, table } = useLoaderData();
+  const { foods, table } = useRouteLoaderData("table-id");
   const params = useParams();
   const [orderList, setOrderList] = useState([]); // 주문 목록
   const foodCtx = useContext(FoodCartContext);

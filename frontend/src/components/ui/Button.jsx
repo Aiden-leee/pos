@@ -1,12 +1,13 @@
 import React from "react";
 
-function Button({ children, type = "submit", onClick }) {
+function Button({ children, type = "submit", onClick, className, ...props }) {
+  let classes =
+    "px-2 py-1 border rounded-md border-iconColor hover:bg-defaultBg";
+  if (className) {
+    classes = `${classes} ${className}`;
+  }
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      className="py-1 px-2 border border-iconColor hover:bg-defaultBg rounded-md"
-    >
+    <button type={type} onClick={onClick} className={classes} {...props}>
       {children}
     </button>
   );

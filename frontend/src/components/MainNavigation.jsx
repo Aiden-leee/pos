@@ -6,7 +6,7 @@ import logo from "../logo.svg";
 
 const navigation = [
   { name: "Table", href: "/", current: true },
-  { name: "Members", href: "/members", current: false },
+  { name: "Sale", href: "/sale", current: false },
 ];
 
 function classNames(...classes) {

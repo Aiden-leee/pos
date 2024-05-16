@@ -5,6 +5,7 @@ import RootLayout from "./components/RootLayout";
 import PosMenu, { loader as food } from "./pages/PosMenu";
 import { FoodCartContextProvider } from "./store/FoodContext";
 import Tables, { loader as tables } from "./pages/Tables";
+import Payments from "./pages/Payments";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,8 +21,22 @@ function App() {
         },
         {
           path: "menu/:tableid",
-          element: <PosMenu />,
+          id: "table-id",
           loader: food,
+          children: [
+            {
+              index: true,
+              element: <PosMenu />,
+            },
+            {
+              path: "payments",
+              element: <Payments />,
+            },
+          ],
+        },
+        {
+          path: "sale",
+          element: <p>Sale</p>,
         },
       ],
     },

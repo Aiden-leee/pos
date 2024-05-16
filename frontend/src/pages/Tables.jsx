@@ -5,16 +5,14 @@ import { getFetchTableOrderList } from "../util/http";
 
 // 테이블 상태 현황
 const tableInfo = [
-  { id: 1, status: "All", color: "point", active: true },
-  { id: 2, status: "OCCUPIED", color: "occupied", active: false },
-  { id: 3, status: "VACANT", color: "vacant", active: false },
-  { id: 4, status: "ORDERHOLD", color: "orderHold", active: false },
+  { id: 1, status: "OCCUPIED", color: "occupied", active: false },
+  { id: 2, status: "VACANT", color: "vacant", active: false },
+  { id: 3, status: "ORDERHOLD", color: "orderHold", active: false },
 ];
 
 // 테이블 목록
 function TableLists({ tables }) {
   const color = {
-    point: "bg-point",
     occupied: "bg-occupied",
     vacant: "bg-vacant",
     orderHold: "bg-orderHold",
@@ -36,19 +34,28 @@ function TableLists({ tables }) {
                   {table.hc}명 / {currencyFormatter.format(table.price)}원
                 </span>
               </div>
-              <div className="relative h-48 bg-tableImage bg-no-repeat bg-auto bg-center text-center">
-                <ul className="absolute top-2/4 left-2/4 translate-y-[-50%] translate-x-[-50%]">
+              <div className="relative h-48 text-center bg-center bg-no-repeat bg-auto bg-tableImage">
+                <ul className="absolute top-2/4 left-2/4 translate-y-[-50%] translate-x-[-50%] w-full overflow-y-auto max-h-28">
                   {table.foods.length > 0 &&
-                    table.foods.map((food) => (
-                      <li key={food.id}>
-                        <div>
-                          <strong>
-                            {food.title} x {food.quantity}
-                          </strong>
-                        </div>
-                      </li>
-                    ))}
+                    table.foods.map((food) => {
+                      return (
+                        <li key={food.id}>
+                          <div>
+                            <strong>
+                              {food.title} x {food.quantity}
+                            </strong>
+                          </div>
+                        </li>
+                      );
+                    })}
                 </ul>
+                <div className="absolute text-sm right-2 bottom-2">
+                  {table.foods.length > 0
+                    ? table.updated
+                      ? table.updated
+                      : table.date
+                    : false}
+                </div>
               </div>
             </div>
           </Link>
@@ -62,7 +69,6 @@ function TableLists({ tables }) {
 function Tables() {
   const { tables } = useLoaderData();
   const bullet = {
-    point: "before:bg-point",
     occupied: "before:bg-occupied",
     vacant: "before:bg-vacant",
     orderHold: "before:bg-orderHold",
@@ -72,7 +78,7 @@ function Tables() {
       <div className="pb-4 mb-4 border-b-2 border-borderColor">
         <ul className="flex gap-3">
           {tableInfo.map((info) => (
-            <li key={info.id} className="cursor-pointer">
+            <li key={info.id}>
               <span
                 className={`relative inline-block pl-[14px] before:content-normal before:absolute before:left-0 before:top-1/2 before:w-[10px] before:h-[10px] before:translate-y-[-5px] ${
                   bullet[info.color]

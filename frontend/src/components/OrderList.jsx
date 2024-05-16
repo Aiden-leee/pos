@@ -1,6 +1,6 @@
 import { currencyFormatter, headCount } from "../util/util";
 import { useState, useRef, memo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useRouteLoaderData } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/20/solid";
 import InputCounter from "./ui/InputCounter";
 import Select from "../components/ui/Select";
@@ -145,7 +145,7 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
             </li>
           ))}
       </ul>
-      <div className="sub-total absolute bottom-0 bg-[#fff9f0] border-t-2 border-t-[#8b8b8b] h-[300px] w-full overflow-y-auto">
+      <div className="absolute bottom-0 bg-[#fff9f0] border-t-2 border-t-[#8b8b8b] h-[300px] w-full overflow-y-auto">
         <TotalScreen onProceed={openModal} data={orderlist} />
       </div>
     </>
