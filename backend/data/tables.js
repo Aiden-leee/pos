@@ -1,5 +1,6 @@
 // 데이터 핸들링 파일
 const fs = require("node:fs/promises");
+const { v4: generateId } = require("uuid");
 const { NotFoundError } = require("../utils/error");
 const { dateFormatter } = require("../utils/util");
 
