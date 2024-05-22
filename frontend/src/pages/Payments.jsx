@@ -9,8 +9,8 @@ function Payments() {
 
   return (
     <>
-      <PageContent title="Payments">
-        <div className="flex flex-row flex-auto flex-grow h-full gap-4">
+      <PageContent title="Payments" className="max-w-[768px] m-auto">
+        <div className="h-full gap-4">
           <article className="h-full basis-3/5 border-borderColor rounded-l-xl">
             <div className="flex justify-between items-center bg-white border-b-[1px] rounded-t-xl border-b-borderColor">
               <h3 className="px-4 py-2 font-bold">ORDER ID: tid1</h3>
@@ -55,13 +55,14 @@ function Payments() {
               </div>
             </div>
           </article>
-          <article className="p-5 overflow-y-auto bg-white basis-2/5 snap-y rounded-t-xl">
+          {/* <article className="p-5 overflow-y-auto bg-white basis-2/5 snap-y rounded-t-xl">
             <section>
-              <ul>
-                <li>계산</li>
-              </ul>
+              <div className="text-right">
+                <Button>기타 추가</Button>
+              </div>
+              <EtcAdd />
             </section>
-          </article>
+          </article> */}
         </div>
       </PageContent>
     </>

@@ -45,7 +45,7 @@ function TotalScreen({ data, onProceed, type }) {
 
   return (
     <div className="relative h-full text-right">
-      <ul className="p-4">
+      <ul className="p-4 h-[160px] overflow-y-auto box-border">
         {data.foods.length > 0 &&
           data.foods.map((item) => (
             <li key={item.id}>

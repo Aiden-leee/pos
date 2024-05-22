@@ -1,7 +1,8 @@
 import { currencyFormatter, headCount } from "../util/util";
 import { useState, useRef, memo } from "react";
-import { useParams, useRouteLoaderData } from "react-router-dom";
-import { XCircleIcon } from "@heroicons/react/20/solid";
+import { useParams } from "react-router-dom";
+import { XCircleIcon, PlusIcon } from "@heroicons/react/20/solid";
+
 import InputCounter from "./ui/InputCounter";
 import Select from "../components/ui/Select";
 import TotalScreen from "./TotalScreen";
@@ -9,13 +10,18 @@ import Modal from "./ui/Modal";
 import { useEffect } from "react";
 import { postFetchTableOrderList } from "../util/http";
 import { useCallback } from "react";
+import EtcAdd from "./ui/EtcAdd";
+import Button from "./ui/Button";
 
 // 주문 목록
 const OrderList = memo(function OrderList({ data, onCurrentData }) {
   const params = useParams();
-  const dialog = useRef();
-  const dialogCheck = useRef();
+  const dialog = useRef(); // 주문확인
+  const dialogCheck = useRef(); // 주문 완료
+  const dialogEtc = useRef(); // 기타 추가
   const [orderlist, setOrderList] = useState(data);
+  const [etcItem, setEtcItem] = useState();
+  const [isEtcState, setIsEtcState] = useState(false);
 
   // 수량 증가
   function handleIncrease(food) {
@@ -61,6 +67,12 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
     });
   }
 
+  // etc 추가
+  function handleEtcAdd() {
+    dialogEtc.current.open();
+    setIsEtcState(true);
+  }
+
   // 모달 컨펌
   const handleConfirm = useCallback(
     async function handleConfirm() {
@@ -79,37 +91,65 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
     dialogCheck.current.close();
   }
 
+  // etc 추가 시 orderList 를 업데이트 한다.
+  useEffect(() => {
+    if (etcItem) {
+      const addEtc = {
+        id: "etc" + (Math.random() * 999).toFixed(2),
+        quantity: 1,
+        ...etcItem,
+      };
+      setOrderList((prev) => {
+        const etcUpdate = [...prev.foods, addEtc];
+        return {
+          ...prev,
+          foods: etcUpdate,
+        };
+      });
+    }
+  }, [etcItem, setOrderList]);
+
   useEffect(() => {
     onCurrentData(() => orderlist);
   }, [orderlist, onCurrentData]);
 
   return (
     <>
-      <Modal
-        ref={dialog}
-        title="Order"
-        content="주문하시겠습니까?"
-        type="choice"
-        onConfirm={handleConfirm}
-      />
+      <Modal ref={dialog} title="Order" type="choice" onConfirm={handleConfirm}>
+        주문하시겠습니까?
+      </Modal>
       <Modal
         ref={dialogCheck}
         title="Success"
-        content="주문이 완료되었습니다."
         type="confirm"
         onConfirm={handleConfirmOk}
-      ></Modal>
-      <div className="flex justify-between">
-        <strong className="block pb-2 uppercase">
+      >
+        주문이 완료되었습니다.
+      </Modal>
+      <Modal
+        ref={dialogEtc}
+        title="기타 추가"
+        type="none"
+        handleState={setIsEtcState}
+      >
+        <EtcAdd ref={dialogEtc} isState={isEtcState} currentData={setEtcItem} />
+      </Modal>
+      <div className="flex items-center pb-2">
+        <strong className="block uppercase w-[130px]">
           Table No: {params.tableid}
         </strong>
-        <div>
+        <div className="grow">
           인원수:
           <Select
             lists={headCount}
             onChangeCurrent={(hc) => handleChangeHeadCount(hc)}
             current={orderlist.hc}
           />
+        </div>
+        <div className="text-right">
+          <Button className="flex items-center" onClick={handleEtcAdd}>
+            <span>ETC</span> <PlusIcon className="size-4" />
+          </Button>
         </div>
       </div>
       <ul className="h-full mb-4 overflow-auto">
