@@ -55,7 +55,7 @@ export async function postFetchTableOrderList(orderList, tableid) {
       );
     } else {
       const resData = await response.data;
-      console.log(resData);
+      //console.log(resData);
       return resData;
     }
   } catch (error) {

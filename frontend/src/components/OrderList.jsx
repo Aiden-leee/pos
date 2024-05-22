@@ -1,6 +1,6 @@
 import { currencyFormatter, headCount } from "../util/util";
 import { useState, useRef, memo } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { XCircleIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 import InputCounter from "./ui/InputCounter";
@@ -16,6 +16,7 @@ import Button from "./ui/Button";
 // 주문 목록
 const OrderList = memo(function OrderList({ data, onCurrentData }) {
   const params = useParams();
+  const navi = useNavigate();
   const dialog = useRef(); // 주문확인
   const dialogCheck = useRef(); // 주문 완료
   const dialogEtc = useRef(); // 기타 추가
@@ -67,7 +68,7 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
     });
   }
 
-  // etc 추가
+  // etc 모달 열기
   function handleEtcAdd() {
     dialogEtc.current.open();
     setIsEtcState(true);
@@ -89,6 +90,7 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
   // 주문 모달 닫기
   function handleConfirmOk() {
     dialogCheck.current.close();
+    navi(`/menu/${params.tableid}`);
   }
 
   // etc 추가 시 orderList 를 업데이트 한다.
