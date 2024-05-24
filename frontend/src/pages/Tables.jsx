@@ -21,7 +21,7 @@ function TableLists({ tables }) {
   return (
     <ul className="grid grid-cols-4 gap-4">
       {tables.map((table) => (
-        <li key={table.tid} className="border border-borderColor rounded-xl">
+        <li key={table.id} className="border border-borderColor rounded-xl">
           <Link to={`menu/${table.id}`} className="h-48">
             <div className="relative">
               <div

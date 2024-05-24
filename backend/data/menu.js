@@ -1,11 +1,13 @@
 const fs = require("node:fs/promises");
 const { NotFoundError } = require("../utils/error");
+const path = require("node:path");
 
+const dbPath = path.join(__dirname, "/db.json");
 // 데이터 가져오기
 async function readData() {
   // utf8 로 설정하지 않으면 buffer 형태로 출력됨
   // string 형태 -> parse 해준다
-  const data = await fs.readFile("./db.json", "utf8");
+  const data = await fs.readFile(dbPath, "utf8");
   const res = JSON.parse(data);
   return res.foods;
 }

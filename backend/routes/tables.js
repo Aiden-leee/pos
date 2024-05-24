@@ -7,6 +7,7 @@ const {
   getTableAll,
   updateFoodOfTable,
   getTableDetail,
+  updateTableClear,
 } = require("../data/tables");
 
 // /tables
@@ -37,6 +38,17 @@ router.patch("/:id", async (req, res, next) => {
   try {
     await updateFoodOfTable(req.params.id, data.foods);
     res.json({ message: "table updated", data, status: 200 });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// /tables/:tid/clear
+// 결제 후에 테이블 초기화
+router.patch("/clear/:tid", async (req, res, next) => {
+  try {
+    await updateTableClear(req.params.tid);
+    res.json({ message: "table update clear", status: 200 });
   } catch (error) {
     next(error);
   }

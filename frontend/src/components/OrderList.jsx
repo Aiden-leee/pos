@@ -1,15 +1,12 @@
 import { currencyFormatter, headCount } from "../util/util";
-import { useState, useRef, memo } from "react";
+import { useState, useRef, memo, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { XCircleIcon, PlusIcon } from "@heroicons/react/20/solid";
-
 import InputCounter from "./ui/InputCounter";
 import Select from "../components/ui/Select";
 import TotalScreen from "./TotalScreen";
 import Modal from "./ui/Modal";
-import { useEffect } from "react";
 import { postFetchTableOrderList } from "../util/http";
-import { useCallback } from "react";
 import EtcAdd from "./ui/EtcAdd";
 import Button from "./ui/Button";
 

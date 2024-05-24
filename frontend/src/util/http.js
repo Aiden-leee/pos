@@ -62,3 +62,45 @@ export async function postFetchTableOrderList(orderList, tableid) {
     console.log(error);
   }
 }
+
+// 테이블 결제 요청 후 초기화
+export async function updateTableClear(tid) {
+  try {
+    const response = await instance.patch(`/tables/clear/${tid}`, {
+      ttt: 1,
+    });
+    if (response.status !== 200) {
+      throw json(
+        {
+          message: "could not fetch( updateTableClear )",
+        },
+        { status: 500 }
+      );
+    } else {
+      const resData = await response.data;
+      return resData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// 결제 요청
+export async function actionPayments(table) {
+  try {
+    const response = await instance.post("/sales", table);
+    if (response.status !== 200) {
+      throw json(
+        {
+          message: "could not post",
+        },
+        { status: 500 }
+      );
+    } else {
+      const resData = await response.data;
+      return resData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
