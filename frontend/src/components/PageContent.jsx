@@ -1,5 +1,5 @@
 function PageContent({ title, children, className }) {
-  let styles = `h-full ${className}`;
+  let styles = `h-full ${className ? className : ""}`;
 
   return (
     <>

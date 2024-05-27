@@ -1,17 +1,15 @@
 import { Await, defer, useParams, useRouteLoaderData } from "react-router-dom";
+import { Suspense, useState } from "react";
 import PageContent from "../components/PageContent";
-import { Suspense, useState, useContext } from "react";
 import CardList from "../components/CardList";
 import OrderList from "../components/OrderList";
 import { getFetchFoods, getFetchTableDetailOrderList } from "../util/http";
-import FoodCartContext from "../store/FoodContext";
 
 // 포스 화면
 function PosMenu() {
-  const { foods, table } = useRouteLoaderData("table-id");
   const params = useParams();
+  const { foods, table } = useRouteLoaderData("table-id");
   const [orderList, setOrderList] = useState([]); // 주문 목록
-  const foodCtx = useContext(FoodCartContext);
 
   return (
     <>

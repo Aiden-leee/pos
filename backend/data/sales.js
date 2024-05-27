@@ -22,7 +22,6 @@ async function writeData(data) {
 // sales 데이터 전체 조회
 async function getSalesAll() {
   const data = await readData();
-  console.log(data);
   if (!data) {
     throw new NotFoundError("Could not found any data");
   }

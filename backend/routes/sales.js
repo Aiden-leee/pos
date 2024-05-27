@@ -1,7 +1,7 @@
 // sales router
 const express = require("express");
 const router = express.Router();
-const { addSales } = require("../data/sales");
+const { addSales, getSalesAll } = require("../data/sales");
 
 // sales 데이터 핸들링
 
@@ -10,7 +10,7 @@ const { addSales } = require("../data/sales");
 router.get("/", async (req, res, next) => {
   try {
     const sales = await getSalesAll();
-    sales.json({ sales });
+    res.json({ sales });
   } catch (error) {
     next(error);
   }

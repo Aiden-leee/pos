@@ -20,6 +20,7 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
   const [orderlist, setOrderList] = useState(data);
   const [etcItem, setEtcItem] = useState();
   const [isEtcState, setIsEtcState] = useState(false);
+  const [isProceed, setIsProceed] = useState(false);
 
   // 수량 증가
   function handleIncrease(food) {
@@ -87,7 +88,7 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
   // 주문 모달 닫기
   function handleConfirmOk() {
     dialogCheck.current.close();
-    navi(`/menu/${params.tableid}`);
+    navi(`/`);
   }
 
   // etc 추가 시 orderList 를 업데이트 한다.
@@ -108,8 +109,15 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
     }
   }, [etcItem, setOrderList]);
 
+  // orderlist 변화감지
   useEffect(() => {
     onCurrentData(() => orderlist);
+
+    if (orderlist.foods.length > 0) {
+      setIsProceed(true);
+    } else {
+      setIsProceed(false);
+    }
   }, [orderlist, onCurrentData]);
 
   return (
@@ -185,7 +193,11 @@ const OrderList = memo(function OrderList({ data, onCurrentData }) {
           ))}
       </ul>
       <div className="absolute bottom-0 bg-[#fff9f0] border-t-2 border-t-[#8b8b8b] h-[300px] w-full overflow-y-auto">
-        <TotalScreen onProceed={openModal} data={orderlist} />
+        <TotalScreen
+          onProceed={openModal}
+          data={orderlist}
+          isProceed={isProceed}
+        />
       </div>
     </>
   );

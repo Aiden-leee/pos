@@ -52,11 +52,9 @@ async function updateFoodOfTable(id, data) {
   // 기존 테이블 데이터를 가져옴
   const storeData = await readData();
 
-  console.log(storeData);
-  console.log(id);
-  console.log("--".repeat(5));
-
-  console.log(data);
+  if (data.foods.length === 0) {
+    return false;
+  }
   console.log("===============================");
   // 해당 테이블의 인덱스
   const targetIndex = storeData.findIndex((item) => item.id === id);

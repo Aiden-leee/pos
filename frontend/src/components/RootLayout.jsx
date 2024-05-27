@@ -6,7 +6,9 @@ function RootLayout() {
     <>
       <MainNavigation />
       <main className="p-5 pt-[100px] pb-[64px] h-full bg-defaultBg">
-        <Outlet />
+        <div className="max-w-[1200px] m-auto w-full h-full">
+          <Outlet />
+        </div>
       </main>
     </>
   );

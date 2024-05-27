@@ -6,6 +6,7 @@ import PosMenu, { loader as food } from "./pages/PosMenu";
 import { FoodCartContextProvider } from "./store/FoodContext";
 import Tables, { loader as tables } from "./pages/Tables";
 import Payments from "./pages/Payments";
+import Sales, { loader as sales } from "./pages/Sales";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,8 +36,10 @@ function App() {
           ],
         },
         {
-          path: "sale",
-          element: <p>Sale</p>,
+          path: "sales",
+          id: "sales",
+          element: <Sales />,
+          loader: sales,
         },
       ],
     },

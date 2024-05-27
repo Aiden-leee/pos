@@ -104,3 +104,14 @@ export async function actionPayments(table) {
     console.log(error);
   }
 }
+
+// sales 목록
+export async function getSales() {
+  try {
+    const response = await instance.get("/sales");
+    const resData = response.data;
+    return resData.sales;
+  } catch (error) {
+    console.log(error);
+  }
+}
