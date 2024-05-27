@@ -97,3 +97,27 @@ tailwindcss : 3.4.3
   ]
 }
 ```
+
+
+
+### 페이지별 영상
+#### Order 
+
+https://github.com/Aiden-leee/pos/assets/52125590/35bcd2c3-0c1b-4841-84c3-61e588ef9ac5
+
+
+#### Etc Add
+
+https://github.com/Aiden-leee/pos/assets/52125590/0ba495db-5174-4df1-b2a1-eb6f6cfaf943
+
+
+#### modify & payments
+
+https://github.com/Aiden-leee/pos/assets/52125590/45bca0a3-0723-41c7-a4b7-d888a909ad15
+
+
+#### Sales List Page
+
+https://github.com/Aiden-leee/pos/assets/52125590/b94e0baa-2de3-45f5-8e66-9fb43e09c2ef
+
+
