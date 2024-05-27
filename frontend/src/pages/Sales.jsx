@@ -13,7 +13,6 @@ function Sales() {
 
   // 선택된 sales 목록
   function handleSelectHistory(item) {
-    console.log(item);
     setHistoryItems(() => item);
   }
 

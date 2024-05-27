@@ -27,7 +27,7 @@ function TotalScreen({ data, onProceed, type, isProceed }) {
       <Button
         type="button"
         onClick={onProceed}
-        className={`py-2 px-4 bg-active rounded-lg border border-iconColor font-bold text-[#666] hover:text-[#333] hover:border-[#666] ${
+        className={`py-2 px-4 bg-active rounded-lg border border-iconColor font-bold text-[#666] hover:bg-active hover:text-[#333] hover:border-[#666] ${
           !isProceed
             ? "bg-iconColor cursor-not-allowed hover:bg-iconColor border-none hover:text-borderColor text-borderColor"
             : ""
@@ -39,14 +39,14 @@ function TotalScreen({ data, onProceed, type, isProceed }) {
       <Button
         type="button"
         onClick={() => navi("payments")}
-        className={`py-2 px-4 bg-point rounded-lg border border-iconColor font-bold text-white hover:text-active hover:border-[#666] ${
+        className={`py-2 px-4 bg-point rounded-lg border border-iconColor font-bold text-white hover:bg-point hover:text-active hover:border-[#666] ${
           !hasFoodsState
             ? "bg-iconColor cursor-not-allowed hover:bg-iconColor border-none hover:text-borderColor text-borderColor"
             : ""
         }`}
         disabled={!hasFoodsState ? true : false}
       >
-        Payment
+        Payments
       </Button>
     </>
   );
