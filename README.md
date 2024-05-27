@@ -5,6 +5,19 @@
 
 
 
+### 실행
+```
+// frontend
+cd frontend
+npm install
+npm start
+
+// backend
+cd backend
+npm install
+npm start
+```
+
 
 ### 버전
 ```
