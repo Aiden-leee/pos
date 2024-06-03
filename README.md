@@ -1,4 +1,4 @@
-## POS System
+## React.js POS System
 #### 음식 POS 앱
 
 ![pos](https://github.com/Aiden-leee/pos/assets/52125590/f28bd3bd-1c53-4a8e-b9b6-ecbd1a59a0c0)
